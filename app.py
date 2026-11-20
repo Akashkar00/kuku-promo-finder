@@ -35,12 +35,13 @@ st.set_page_config(page_title="Promo Finder", page_icon="🎬", layout="wide")
 
 ROOT = Path(__file__).parent
 RUNS = ROOT / "outputs"
-# Hosted mode (Streamlit Community Cloud): set APP_PASSCODE (and ANTHROPIC_API_KEY) as app secrets.
+# Hosted mode (Streamlit Community Cloud): set APP_HOSTED = "1" (and ANTHROPIC_API_KEY) as app secrets.
 # Root-level Streamlit secrets are exposed as environment variables.
-# - The server's key is used only after the passcode is entered; a visitor's own key needs no passcode.
 # - Each visitor's runs go to a private temp folder, so no one sees another visitor's (confidential) show.
+# - Optional APP_PASSCODE: if set, the server's key is used only after the passcode is entered
+#   (a visitor's own key needs no passcode).
 PASSCODE = os.environ.get("APP_PASSCODE", "")
-HOSTED = bool(PASSCODE)
+HOSTED = bool(PASSCODE) or os.environ.get("APP_HOSTED") == "1"
 DEFAULT_MODEL = {"anthropic": "claude-sonnet-5-5", "gemini": "gemini-flash-latest", "openai_compat": ""}
 KEY_ENV = {"anthropic": "ANTHROPIC_API_KEY", "gemini": "GEMINI_API_KEY", "openai_compat": "OPENAI_COMPAT_API_KEY"}
 # Measured on the 50-episode pack: ~5.6k input / ~0.8k output tokens per episode call.
@@ -232,11 +233,11 @@ with st.sidebar:
     base_url = st.text_input("Base URL", disabled=provider != "openai_compat") or None
     env_key = bool(os.environ.get(KEY_ENV[provider]))
     api_key = st.text_input("API key", type="password",
-                            placeholder=("leave empty to use the server key (passcode)" if HOSTED and env_key else
+                            placeholder=("leave empty to use the server key" if HOSTED and env_key else
                                          "using key from server env" if env_key else f"paste {KEY_ENV[provider]}"),
                             help="Used for this session only; never written to disk.") or None
     passcode_ok = True
-    if HOSTED and not api_key:
+    if PASSCODE and not api_key:
         entered = st.text_input("Passcode", type="password",
                                 help="Needed to run on the server's key. It is in the solution doc; "
                                      "or paste your own API key above instead.")

@@ -46,12 +46,11 @@ Nothing is bundled with the app. It only sees what you upload. It runs the same 
 - Add these app secrets:
   ```toml
   ANTHROPIC_API_KEY = "sk-ant-..."
-  APP_PASSCODE = "choose-a-passcode"
+  APP_HOSTED = "1"
+  # APP_PASSCODE = "..."   # optional: require a passcode before the server's key is used
   ```
-- With `APP_PASSCODE` set, the app runs in hosted mode:
-  - The server's key is used only after a visitor enters the passcode. A visitor who pastes their own key needs no passcode.
-  - Each visitor's runs go to a private temporary folder, so nobody sees another visitor's show.
-  - Set a monthly spend limit on the key in the Anthropic console.
+- `APP_HOSTED` puts each visitor's runs in a private temporary folder, so nobody sees another visitor's show.
+- Without a passcode, anyone with the link can run on the server's key. Set a monthly spend limit on the key in the Anthropic console.
 
 ## Swap the model
 

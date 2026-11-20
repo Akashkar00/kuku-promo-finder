@@ -1,0 +1,85 @@
+# GOLD SET: hand-labelled must-have promo moments.
+#
+# PROVENANCE (state this in the solution doc):
+#   Drafted by Claude Opus 5.5 (Claude Code) from reading the condensed
+#   scripts, BLIND to the pipeline's picks (only run counts had been seen).
+#   Reviewed / edited by: Akash  <- change entries you disagree with, then update this line.
+#   Caveat: the drafter and the mining model are both Claude models, so
+#   recall against this set is likely optimistic versus a human editor's set.
+#
+# Plot notes for each moment are kept in gold_notes.private.yaml (gitignored):
+# they paraphrase the confidential script.
+#
+# Times are episode-relative mm:ss (eval allows +-5 s on the hook).
+#   hook_at : when the hook line/action happens (should be in the first 3 s)
+#   end_at  : where to cut (the unresolved moment)
+
+moments:
+  - id: G01
+    episode: 1
+    hook_at: "00:39"
+    end_at: "01:08"
+
+  - id: G02
+    episode: 3
+    hook_at: "00:58"
+    end_at: "01:28"
+
+  - id: G03
+    episode: 3
+    hook_at: "02:00"
+    end_at: "02:25"
+
+  - id: G04
+    episode: 5
+    hook_at: "00:54"
+    end_at: "01:41"
+
+  - id: G05
+    episode: 12
+    hook_at: "00:44"
+    end_at: "01:09"
+
+  - id: G06
+    episode: 13
+    hook_at: "00:46"
+    end_at: "01:36"
+
+  - id: G07
+    episode: 18
+    hook_at: "00:56"
+    end_at: "01:30"
+
+  - id: G08
+    episode: 24
+    hook_at: "00:29"
+    end_at: "01:10"
+
+  - id: G09
+    episode: 27
+    hook_at: "00:17"
+    end_at: "00:52"
+
+  - id: G10
+    episode: 31
+    hook_at: "01:58"
+    end_at: "02:35"
+
+  - id: G11
+    episode: 41
+    hook_at: "00:58"
+    end_at: "01:33"
+
+  - id: G12
+    episode: 42
+    hook_at: "00:11"
+    end_at: "00:40"
+
+  - id: G13
+    episode: 45
+    hook_at: "01:26"
+    end_at: "02:01"
+
+# Considered and left out: ep 34 witchcraft trial (strong ending, weaker first 3 s),
+# ep 27 framing for poisoning, ep 7 silent husband scares off the ex.
+# Notes are paraphrased on purpose: this file is in the public repo, the script is confidential.

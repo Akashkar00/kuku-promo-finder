@@ -1,0 +1,26 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Secrets
+.env
+
+# CONFIDENTIAL: Kuku input pack + anything quoting it. Never commit.
+data/
+outputs/
+.cache/
+*.txt
+!requirements*.txt
+
+# macOS
+.DS_Store
+
+# Gold-set plot notes (paraphrase the confidential script)
+*.private.yaml

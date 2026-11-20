@@ -1,0 +1,43 @@
+# Default settings. Every value can be overridden from the CLI.
+
+llm:
+  provider: anthropic          # anthropic | gemini | openai_compat
+  model: claude-sonnet-5-5     # dev: claude-haiku-5-5 ; other providers: gemini / openai_compat
+  effort: low                  # anthropic only: low | medium | high | xhigh | max
+  max_tokens: 16000
+  base_url: null               # openai_compat only (e.g. an API Kuku provides)
+  api_key_env: null            # openai_compat only: name of the env var with the key
+  fallbacks: true              # anthropic server-side refusal fallback (skipped for Haiku)
+
+pipeline:
+  include_camera: false        # send CAMERA blocks to the LLM (about 2x tokens)
+
+rules:                         # hard rules, enforced in code (assemble.py)
+  min_len: 20.0
+  max_len: 60.0
+  hook_window: 3.0
+  max_segments: 3
+
+rank:                          # rank.py
+  w_hook: 0.35
+  w_cliffhanger: 0.30
+  w_standalone: 0.25
+  w_early_arc: 0.10
+  spoiler_penalty: {none: 0.0, low: 0.03, high: 0.10}
+  extra_segment_penalty: 0.02  # per segment beyond the first (jump cuts are judged blind)
+  gap_penalty: 0.04            # x min(1, largest skipped gap / 60 s)
+  extended_end_penalty: 0.05   # validator stretched the clip past the cliffhanger to reach 20 s
+  w_judge: 0.6                 # blend with the cold-viewer judge when it ran; 0 = self-scores only
+  overlap_iou: 0.5             # two cuts of the same scene ->
+  same_scene_overlap: 0.4      #   keep the best, list the other as an "alt cut"
+  max_per_episode_top: 2
+  top_n: 20
+  post_first_n: 5              # ranks 1..5 = posting order: distinct episodes and hook types
+
+judge:                         # judge.py: independent cold-viewer re-ranking of validated promos
+  enabled: true                # skipped (falls back to self-scores) if its key is missing
+  provider: anthropic          # any provider works (e.g. gemini)
+  model: claude-opus-5-5       # stronger than the miner: a second opinion, not self-grading
+  effort: low
+  group_size: 30               # clips ordered per call
+  passes: 2                    # shuffled passes; their agreement is reported in run_meta.json
